@@ -6,14 +6,16 @@
   "password": "123456",
   "database": "nestjs-users-auth",
   "entities": [
-    "**/*.entity{.ts,.js}"
+    "/../**/*.entity.{js,ts}"
   ],
   "migrationsTableName": "migration",
   "migrations": [
-    "src/migration/*.ts"
+    "/../migration/**/*.{js,ts}"
   ],
   "cli": {
-    "migrationsDir": "src/migration"
+    "entitiesDir": "src/model",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/suscriber"
   },
   "ssl": false
 }
