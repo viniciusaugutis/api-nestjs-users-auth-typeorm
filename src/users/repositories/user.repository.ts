@@ -8,6 +8,7 @@ import {
 import { User } from '../models/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserRole } from '../models/enums/user-roles.enum';
+import { CredentialsDto } from 'src/auth/dtos/credentials.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -38,6 +39,17 @@ export class UserRepository extends Repository<User> {
           'Erro ao salvar o usuário no banco de dados',
         );
       }
+    }
+  }
+
+  async checkCredentials(credentialsDto: CredentialsDto): Promise<User> {
+    const { email, password } = credentialsDto;
+    const user = await this.findOne({ email, status: true });
+
+    if (user && (await user.checkPassword(password))) {
+      return user;
+    } else {
+      return null;
     }
   }
 
